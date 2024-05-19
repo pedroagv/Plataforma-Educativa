@@ -4,18 +4,55 @@ import Instructor from '../model/Instructor.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // metodo para listar los estudiantes al iniciar
+    mostrarInstructores();
+
     // metodo para listar los cursos al iniciar
     mostrarCursos();
 
     // metodo para listar los estudiantes al iniciar
     mostrarEstudiantes();
 
-    // metodo para listar los estudiantes al iniciar
-    mostrarInstructores();
-    
 });
 
 
+// control del boton del formulario instructor
+var frminstructor = document.getElementById('frm-instructor');
+frminstructor.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var form = event.target;
+    var id = form.id.value;
+    var nombre = form.nombre.value;
+    var edad = form.edad.value;
+    var especialidad = form.especialidad.value;
+    
+    const obj = new Instructor(id, nombre, edad, especialidad);
+    Instructor.guardarInstructor(obj);
+    mostrarInstructores();
+    showToast('Instructor agregado con exito!');
+    frminstructor.reset();
+});
+
+
+// control del boton del formulario curso
+var frmcurso = document.getElementById('frm-curso');
+frmcurso.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var form = event.target;
+    var id = form.id.value;
+    var nombrecurso = form.nombrecurso.value;
+    var duracion = form.duracion.value;
+    var nivel = form.nivel.value;
+    var instructores = JSON.parse(form.instructores.value);
+
+    const obj = new Curso(id, nombrecurso, duracion, nivel, instructores);
+    Curso.guardarCurso(obj);
+    mostrarCursos();
+    showToast('Curso agregado con exito!');
+    frmcurso.reset();
+});
 
 // control del boton del formulario estudiantes
 var frmestudiante = document.getElementById('frm-estudiante');
@@ -35,43 +72,6 @@ frmestudiante.addEventListener('submit', function (event) {
 
 });
 
-
-// control del boton del formulario curso
-var frmcurso = document.getElementById('frm-curso');
-frmcurso.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    var form = event.target;
-    var nombrecurso = form.nombrecurso.value;
-    var duracion = form.duracion.value;
-    var nivel = form.nivel.value;
-    var instructores = JSON.parse(form.instructores.value);
-
-    const obj = new Curso(null, nombrecurso, duracion, nivel, instructores);
-    Curso.agregarCurso(obj);
-    mostrarCursos();
-    showToast('Curso agregado con exito!');
-    frmcurso.reset();
-});
-
-
-// control del boton del formulario instructor
-var frminstructor = document.getElementById('frm-instructor');
-frminstructor.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    var form = event.target;
-    var nombre = form.nombre.value;
-    var edad = form.edad.value;
-    var especialidad = form.especialidad.value;
-    var cursos = [];
-
-    const obj = new Instructor(null, nombre, edad, especialidad, cursos);
-    Instructor.agregarInstructor(obj);
-    mostrarInstructores();
-    showToast('Instructor agregado con exito!');
-    frminstructor.reset();
-});
 
 // accion para traer los instructores en una lista multiple
 document.getElementById('btn-multiple-instructor').addEventListener('click', function () {
@@ -112,6 +112,7 @@ document.getElementById('btn-multiple-curso').addEventListener('click', function
     });
 });
 
+
 function mostrarEstudiantes() {
     let elemento = document.getElementById('listaestudiantes');
     elemento.innerHTML = '';
@@ -123,7 +124,7 @@ function mostrarEstudiantes() {
             <b>Actualmente no hay estudiantes inscritos.</b>
         </a>`;
 
-        showToast('Actualmente no hay estudiantes inscritos.!','danger');
+        showToast('Actualmente no hay estudiantes inscritos.!', 'danger');
 
         return;
     }
@@ -145,10 +146,13 @@ function mostrarEstudiantes() {
             </div>
             <div>
                 <button class="btn btn-light btn-sm me-2">✏️</button>
-                <button class="btn btn-light btn-sm me-2">🗑️</button>
+                <button class="btn btn-light btn-sm me-2 btn-eliminar-estudiante" data-id="${estudiante.id}" >🗑️</button>
             </div>
         </div>`;
     });
+
+    // se hace aca en la carga del dom para que los elmentos ya esten en el DOM
+    crearBtnEliminarEstudiante();
 }
 
 function mostrarCursos() {
@@ -162,7 +166,7 @@ function mostrarCursos() {
             <b>Actualente no hay cursos disponibles:</b>
         </a>`;
 
-        showToast('Actualente no hay cursos disponibles.!','danger');
+        showToast('Actualente no hay cursos disponibles.!', 'danger');
 
         return;
     }
@@ -188,12 +192,14 @@ function mostrarCursos() {
             </div>
             <div>
                 <button class="btn btn-light btn-sm me-2">✏️</button>
-                <button class="btn btn-light btn-sm me-2">🗑️</button>
+                <button class="btn btn-light btn-sm me-2 btn-eliminar-curso" data-id="${curso.id}">🗑️</button>
             </div>
         </div>`;
     });
 
     mostrarCursosAsociarEstudiante();
+
+    crearBtnEliminarCursos();
 
 }
 
@@ -210,7 +216,7 @@ function mostrarCursosAsociarEstudiante() {
             </a>
         </li>`;
 
-        showToast('Actualmente no hay cursos disponibles.!','danger');
+        showToast('Actualmente no hay cursos disponibles.!', 'danger');
 
         return;
     }
@@ -238,7 +244,7 @@ function mostrarInstructorAsociarCurso() {
             </a>
         </li>`;
 
-        showToast('Actualente no hay instructores en la plataforma..!','danger');
+        showToast('Actualente no hay instructores en la plataforma..!', 'danger');
 
         return;
     }
@@ -265,7 +271,7 @@ function mostrarInstructores() {
                 <b>Actualmente no se han creado instructores</b>
             </a>`;
 
-            showToast('Actualente no hay instructores en la plataforma..!','danger');
+        showToast('Actualente no hay instructores en la plataforma..!', 'danger');
         return;
     }
 
@@ -279,11 +285,15 @@ function mostrarInstructores() {
                 <b>especialidad:</b> ${instructor.especialidad}
             </div>
             <div>
-                <button class="btn btn-light btn-sm me-2">✏️</button>
-                <button class="btn btn-light btn-sm me-2">🗑️</button>
+                <button class="btn btn-light btn-sm me-2 btn-editar-instructor" data-id="${instructor.id}">✏️</button>
+                <button class="btn btn-light btn-sm me-2 btn-eliminar-instructor" data-id="${instructor.id}">🗑️</button>
             </div>
         </div>`;
     });
+
+    crearBtnEliminarInstructor();
+
+    crearBtnEditarInstructor();
 
 }
 
@@ -292,7 +302,7 @@ function mostrarInstructores() {
 function showToast(message, type = 'success') {
     const toastContainer = document.getElementById('toast-container');
     const toastId = 'toast-' + Date.now();
-    
+
     const toastHTML = `
         <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -305,13 +315,94 @@ function showToast(message, type = 'success') {
     `;
 
     toastContainer.insertAdjacentHTML('beforeend', toastHTML);
-    
+
     const toastElement = document.getElementById(toastId);
     const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
 
     toast.show();
-    
+
     toastElement.addEventListener('hidden.bs.toast', () => {
         toastElement.remove();
+    });
+}
+
+function crearBtnEliminarInstructor() {
+    const botonesEliminaInstructores = document.querySelectorAll('.btn-eliminar-instructor');
+
+    botonesEliminaInstructores.forEach(boton => {
+        boton.addEventListener('click', (evento) => {
+            evento.preventDefault();
+
+            let id = boton.getAttribute('data-id');
+            Instructor.eliminarInstructor(id);
+
+            showToast('Instructor eliminado con exito!');
+
+            mostrarInstructores();
+
+        });
+    });
+}
+
+function crearBtnEditarInstructor() {
+    const botonesEliminaInstructores = document.querySelectorAll('.btn-editar-instructor');
+
+    botonesEliminaInstructores.forEach(boton => {
+        boton.addEventListener('click', (evento) => {
+            evento.preventDefault();
+
+            let id = boton.getAttribute('data-id');
+            
+            const instructor = Instructor.obtenerInstructorPorid(id);
+
+            // cargamos de nuevo el formulario con los datos
+            console.log(instructor);
+
+            const formulario = document.getElementById('frm-instructor');
+
+            // Asigna valores a los campos del formulario
+            formulario.querySelector('#id').value = instructor.id || '';
+            formulario.querySelector('#nombre').value = instructor.nombre || '';
+            formulario.querySelector('#edad').value = instructor.edad || '';
+            formulario.querySelector('#especialidad').value = instructor.especialidad || '';
+
+        });
+    });
+}
+
+function crearBtnEliminarCursos() {
+    const botonesEliminarEstudiantes = document.querySelectorAll('.btn-eliminar-curso');
+
+    botonesEliminarEstudiantes.forEach(boton => {
+        boton.addEventListener('click', (evento) => {
+            evento.preventDefault();
+
+            let id = boton.getAttribute('data-id');
+            Curso.eliminarCurso(id);
+
+            showToast('Curso eliminado con exito!');
+
+            mostrarCursos();
+
+        });
+    });
+}
+
+
+function crearBtnEliminarEstudiante() {
+    const botonesEliminarEstudiantes = document.querySelectorAll('.btn-eliminar-estudiante');
+
+    botonesEliminarEstudiantes.forEach(boton => {
+        boton.addEventListener('click', (evento) => {
+            evento.preventDefault();
+
+            let id = boton.getAttribute('data-id');
+            Estudiante.eliminarEstudiante(id);
+
+            showToast('Estudiante eliminado con exito!');
+
+            mostrarEstudiantes();
+
+        });
     });
 }
