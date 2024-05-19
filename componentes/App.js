@@ -1,17 +1,17 @@
-import { createNavbar } from './navBar.js';
 import Estudiante from '../model/Estudiante.js'
 import Curso from '../model/Curso.js'
+import Instructor from '../Model/Instructor.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    const navbar = createNavbar();
-    document.body.prepend(navbar);
 
     // metodo para listar los cursos al iniciar
     Curso.mostrarCursos();
 
     // metodo para listar los estudiantes al iniciar
     Estudiante.mostrarEstudiantes();
+
+    // metodo para listar los estudiantes al iniciar
+    Instructor.mostrarInstructores();
 
 });
 
@@ -24,11 +24,10 @@ frmestudiante.addEventListener('submit', function (event) {
 
     var form = event.target;
     var nombre = form.nombre.value;
-    var apellido = form.apellido.value;
     var edad = form.edad.value;
     var cursos = form.cursos.value;
-    const obj = new Estudiante(nombre, apellido, edad, JSON.parse(cursos));
-    debugger;
+    const obj = new Estudiante(null, nombre, edad, JSON.parse(cursos));
+
     Estudiante.agregarEstudiante(obj);
     Estudiante.mostrarEstudiantes();
     console.log(obj);
@@ -44,17 +43,65 @@ frmcurso.addEventListener('submit', function (event) {
     var nombrecurso = form.nombrecurso.value;
     var duracion = form.duracion.value;
     var nivel = form.nivel.value;
-    const obj = new Curso(nombrecurso, duracion, nivel, [], []);
+    var instructores = JSON.parse(form.instructores.value);
+
+    const obj = new Curso(null, nombrecurso, duracion, nivel, instructores);
     Curso.agregarCurso(obj);
     Curso.mostrarCursos();
     console.log(obj);
 });
 
 
-// accion para asociar los cursos y los estudiantes
-document.getElementById('btnPrueba').addEventListener('click', function () {
-    const checkboxes = document.querySelectorAll('.list-group-item input[type="checkbox"]:checked');
-    const selectedItems = Array.from(checkboxes).map(checkbox => checkbox.value);
-    document.getElementById('cursos').value = JSON.stringify(selectedItems); 
-    console.log(selectedItems);
+// control del boton del formulario instructor
+var frmcurso = document.getElementById('frm-instructor');
+frmcurso.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var form = event.target;
+    var nombre = form.nombre.value;
+    var edad = form.edad.value;
+    var especialidad = form.especialidad.value;
+    var cursos = [];
+
+    const obj = new Instructor(null, nombre, edad, especialidad, cursos);
+    Instructor.agregarInstructor(obj);
+    Instructor.mostrarInstructores();
+    console.log(obj);
+});
+
+// accion para traer los instructores en una lista multiple
+document.getElementById('btn-multiple-instructor').addEventListener('click', function () {
+
+    Instructor.mostrarInstructorAsociarCurso();
+
+    const btnPrueba = document.getElementById('btnPrueba');
+
+    const newBtnPrueba = btnPrueba.cloneNode(true);
+    btnPrueba.parentNode.replaceChild(newBtnPrueba, btnPrueba);
+
+    // accion para asociar los cursos y los estudiantes
+    newBtnPrueba.addEventListener('click', function () {
+        const checkboxes = document.querySelectorAll('.list-group-item input[type="checkbox"]:checked');
+        const selectedItems = Array.from(checkboxes).map(checkbox => checkbox.value);
+        document.getElementById('instructores').value = JSON.stringify(selectedItems);
+    });
+
+});
+
+// accion para traer los instructores en una lista multiple
+document.getElementById('btn-multiple-curso').addEventListener('click', function () {
+
+    Curso.mostrarCursosAsociarEstudiante();
+
+    const btnPrueba = document.getElementById('btnPrueba');
+
+    const newBtnPrueba = btnPrueba.cloneNode(true);
+    btnPrueba.parentNode.replaceChild(newBtnPrueba, btnPrueba);
+
+    // accion para asociar los cursos y los estudiantes
+    newBtnPrueba.addEventListener('click', function () {
+        const checkboxes = document.querySelectorAll('.list-group-item input[type="checkbox"]:checked');
+        const selectedItems = Array.from(checkboxes).map(checkbox => checkbox.value);
+        document.getElementById('cursos').value = JSON.stringify(selectedItems);
+    });
 });
