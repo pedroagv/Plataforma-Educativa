@@ -1,4 +1,5 @@
 .margen {
-    max-height: 280px;
-    overflow-x: overlay;
+    max-height: 320px;
+    overflow-y: scroll; /* Asegura que haya desplazamiento vertical si el contenido se desborda */
+    overflow-x: hidden; /* Oculta cualquier desbordamiento horizontal */
 }

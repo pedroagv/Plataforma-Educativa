@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>!Plataforma Educativa!</title>
-    <script type="module" src="../componentes/App.js"></script>
-    <link rel="stylesheet" href="../css/main.css">
+    <!-- <script type="module" src="../componentes/App.js"></script> -->
+    <script type="module" src="../Plataforma-Educativa/componentes/App.js"></script>
+    <link rel="stylesheet" href="../Plataforma-Educativa/css/main.css">
 </head>
 
 <body>
@@ -19,19 +20,7 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="Cursos.html">Cursos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Estudiantes.html">Estudiantes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Instructor.html">Instructor</a>
-                    </li>
-                </ul>
-            </div>
+            
         </div>
     </nav>
 
@@ -59,8 +48,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <button type="button" id="btn-multiple-instructor" class="btn btn-info text-white w-100" data-bs-toggle="modal"
-                            data-bs-target="#seleccionMultipleModal">
+                        <button type="button" id="btn-multiple-instructor" class="btn btn-info text-white w-100"
+                            data-bs-toggle="modal" data-bs-target="#seleccionMultipleModal">
                             Seleccione los Instructores para el curso
                         </button>
                         <input type="hidden" class="form-control" id="instructores" name="instructores" />
@@ -91,15 +80,15 @@
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" />
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="edad" class="form-label">Edad</label>
                         <input type="text" class="form-control" id="edad" name="edad" />
                     </div>
 
                     <div class="mb-3">
-                        <button type="button" id="btn-multiple-curso" class="btn btn-secondary text-white w-100" data-bs-toggle="modal"
-                            data-bs-target="#seleccionMultipleModal">
+                        <button type="button" id="btn-multiple-curso" class="btn btn-secondary text-white w-100"
+                            data-bs-toggle="modal" data-bs-target="#seleccionMultipleModal">
                             Seleccione los cursos
                         </button>
                         <input type="hidden" class="form-control" id="cursos" name="cursos" />
@@ -144,7 +133,7 @@
 
             <div class="col-12 col-sm-6 col-md-8 border border-danger p-2 mb-3">
                 <h4 class="bg-danger p-3 text-white">Listado de Asignacion de instructores</h4>
-                <div class="list-group" id="listainstructores">
+                <div class="list-group margen" id="listainstructores">
                     <a href="#" class="list-group-item list-group-item-action">Estudiante 1</a>
                     <a href="#" class="list-group-item list-group-item-action">Estudiante 2</a>
                     <a href="#" class="list-group-item list-group-item-action">Estudiante 3</a>
@@ -192,7 +181,8 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnPrueba" class="btn btn-primary" data-bs-dismiss="modal">Asociar información</button>
+                    <button type="button" id="btnPrueba" class="btn btn-primary" data-bs-dismiss="modal">Asociar
+                        información</button>
                 </div>
             </div>
         </div>
