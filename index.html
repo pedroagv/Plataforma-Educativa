@@ -20,16 +20,57 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sec-cursos">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sec-estudiante">Estudiantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sec-instructor">Instructor</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container p-5">
-
+    <div class="container pt-4">
         <div class="row">
 
+            <!--ASIGNACION DE INSTRUCTORES-->
+            <div class="col-12 col-sm-6 col-md-4 border border-danger p-2 mb-3" id="sec-instructor">
+                <h4 class="bg-danger text-white p-3">Asignación de Instructores</h4>
+
+                <form id="frm-instructor">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="edad" class="form-label">Edad</label>
+                        <input type="text" class="form-control" id="edad" name="edad" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="especialidad" class="form-label">Especialidad</label>
+                        <input type="text" class="form-control" id="especialidad" name="especialidad" />
+                    </div>
+
+                    <button type="submit" class="btn btn-danger text-white">Guardar</button>
+                </form>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-8 border border-danger p-2 mb-3">
+                <h4 class="bg-danger p-3 text-white">Listado de Asignacion de instructores</h4>
+                <div class="list-group margen" id="listainstructores">
+                    <a href="#" class="list-group-item list-group-item-action">instructor 1</a>
+                </div>
+            </div>
+
+
             <!--GESTION DE CURSOS-->
-            <div class="col-12 col-sm-6 col-md-4 border border-info p-2 mb-3">
+            <div class="col-12 col-sm-6 col-md-4 border border-info p-2 mb-3" id="sec-cursos">
                 <h4 class="bg-info p-3 text-white">Gestión de cursos</h4>
                 <form id="frm-curso">
                     <div class="mb-3">
@@ -64,16 +105,13 @@
                 <h4 class="bg-info p-3 text-white">Listado de cursos disponibles</h4>
                 <div class="list-group margen" id="listacursos">
                     <a href="#" class="list-group-item list-group-item-action">Curso 1</a>
-                    <a href="#" class="list-group-item list-group-item-action">Curso 2</a>
-                    <a href="#" class="list-group-item list-group-item-action">Curso 3</a>
-                    <a href="#" class="list-group-item list-group-item-action">Curso 4</a>
                 </div>
             </div>
 
             <!--GESTION DE CURSOS-->
 
             <!--INSCRIPCION DE ESTUDICANTES-->
-            <div class="col-12 col-sm-6 col-md-4 border border-secondary p-2 mb-3">
+            <div class="col-12 col-sm-6 col-md-4 border border-secondary p-2 mb-3" id="sec-estudiante">
                 <h4 class="bg-secondary text-white p-3">Inscripción de Estudiantes</h4>
                 <form id="frm-estudiante">
                     <div class="mb-3">
@@ -103,43 +141,9 @@
                 <h4 class="bg-secondary p-3 text-white">Listado de estudiantes inscritos</h4>
                 <div class="list-group margen" id="listaestudiantes">
                     <a href="#" class="list-group-item list-group-item-action">Estudiante 1</a>
-                    <a href="#" class="list-group-item list-group-item-action">Estudiante 2</a>
-                    <a href="#" class="list-group-item list-group-item-action">Estudiante 3</a>
-                    <a href="#" class="list-group-item list-group-item-action">Estudiante 4</a>
                 </div>
             </div>
 
-            <!--ASIGNACION DE INSTRUCTORES-->
-            <div class="col-12 col-sm-6 col-md-4 border border-danger p-2 mb-3">
-                <h4 class="bg-danger text-white p-3">Asignación de Instructores</h4>
-
-                <form id="frm-instructor">
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="edad" class="form-label">Edad</label>
-                        <input type="text" class="form-control" id="edad" name="edad" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="especialidad" class="form-label">Especialidad</label>
-                        <input type="text" class="form-control" id="especialidad" name="especialidad" />
-                    </div>
-
-                    <button type="submit" class="btn btn-danger text-white">Guardar</button>
-                </form>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-8 border border-danger p-2 mb-3">
-                <h4 class="bg-danger p-3 text-white">Listado de Asignacion de instructores</h4>
-                <div class="list-group margen" id="listainstructores">
-                    <a href="#" class="list-group-item list-group-item-action">Estudiante 1</a>
-                    <a href="#" class="list-group-item list-group-item-action">Estudiante 2</a>
-                    <a href="#" class="list-group-item list-group-item-action">Estudiante 3</a>
-                    <a href="#" class="list-group-item list-group-item-action">Estudiante 4</a>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -161,22 +165,6 @@
                         <li class="list-group-item">
                             <input type="checkbox" id="item1" value="Elemento 1">
                             <label for="item1">Elemento 1</label>
-                        </li>
-                        <li class="list-group-item">
-                            <input type="checkbox" id="item2" value="Elemento 2">
-                            <label for="item2">Elemento 2</label>
-                        </li>
-                        <li class="list-group-item">
-                            <input type="checkbox" id="item3" value="Elemento 3">
-                            <label for="item3">Elemento 3</label>
-                        </li>
-                        <li class="list-group-item">
-                            <input type="checkbox" id="item4" value="Elemento 4">
-                            <label for="item4">Elemento 4</label>
-                        </li>
-                        <li class="list-group-item">
-                            <input type="checkbox" id="item5" value="Elemento 5">
-                            <label for="item5">Elemento 5</label>
                         </li>
                     </ul>
                 </div>

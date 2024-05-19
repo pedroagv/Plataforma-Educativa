@@ -3,3 +3,8 @@
     overflow-y: scroll; /* Asegura que haya desplazamiento vertical si el contenido se desborda */
     overflow-x: hidden; /* Oculta cualquier desbordamiento horizontal */
 }
+
+body{
+    background-color: #fafafa;
+    font-size: 0.9rem;    
+}
