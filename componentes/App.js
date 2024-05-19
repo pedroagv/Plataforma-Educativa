@@ -1,6 +1,6 @@
 import Estudiante from '../model/Estudiante.js'
 import Curso from '../model/Curso.js'
-import Instructor from '../Model/Instructor.js';
+import Instructor from '../model/Instructor.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
