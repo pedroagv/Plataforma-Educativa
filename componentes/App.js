@@ -135,7 +135,8 @@ function mostrarEstudiantes() {
                 <b>cursos: </b> ${cursosStr}
             </div>
             <div>
-                <button class="btn btn-secondary btn-sm me-2">Editar</button>
+                <button class="btn btn-secondary btn-sm me-2">✏️</button>
+                <button class="btn btn-secondary btn-sm me-2">🗑️</button>
             </div>
         </div>`;
     });
@@ -174,7 +175,8 @@ function mostrarCursos() {
                 <b>Instructores: </b> ${instructorStr}
             </div>
             <div>
-                <button class="btn btn-info text-white btn-sm me-2">Editar</button>
+                <button class="btn btn-info text-white btn-sm me-2">✏️</button>
+                <button class="btn btn-info text-white btn-sm me-2">🗑️</button>
             </div>
         </div>`;
     });
@@ -257,7 +259,8 @@ function mostrarInstructores() {
                 <b>especialidad:</b> ${instructor.especialidad}
             </div>
             <div>
-                <button class="btn btn-danger btn-sm me-2">Editar</button>
+                <button class="btn btn-danger btn-sm me-2">✏️</button>
+                <button class="btn btn-danger btn-sm me-2">🗑️</button>
             </div>
         </div>`;
     });
