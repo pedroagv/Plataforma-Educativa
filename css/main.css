@@ -8,3 +8,11 @@ body{
     background-color: #fafafa;
     font-size: 0.9rem;    
 }
+
+/* Estilo adicional para la posición del toast */
+#toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1050;
+}

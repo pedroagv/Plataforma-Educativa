@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // metodo para listar los estudiantes al iniciar
     mostrarInstructores();
-
+    
 });
 
 
@@ -30,6 +30,8 @@ frmestudiante.addEventListener('submit', function (event) {
 
     Estudiante.agregarEstudiante(obj);
     mostrarEstudiantes();
+    showToast('Estudiante agregado con exito!');
+    frmestudiante.reset();
 
 });
 
@@ -48,13 +50,14 @@ frmcurso.addEventListener('submit', function (event) {
     const obj = new Curso(null, nombrecurso, duracion, nivel, instructores);
     Curso.agregarCurso(obj);
     mostrarCursos();
-
+    showToast('Curso agregado con exito!');
+    frmcurso.reset();
 });
 
 
 // control del boton del formulario instructor
-var frmcurso = document.getElementById('frm-instructor');
-frmcurso.addEventListener('submit', function (event) {
+var frminstructor = document.getElementById('frm-instructor');
+frminstructor.addEventListener('submit', function (event) {
     event.preventDefault();
 
     var form = event.target;
@@ -66,7 +69,8 @@ frmcurso.addEventListener('submit', function (event) {
     const obj = new Instructor(null, nombre, edad, especialidad, cursos);
     Instructor.agregarInstructor(obj);
     mostrarInstructores();
-
+    showToast('Instructor agregado con exito!');
+    frminstructor.reset();
 });
 
 // accion para traer los instructores en una lista multiple
@@ -84,6 +88,7 @@ document.getElementById('btn-multiple-instructor').addEventListener('click', fun
         const checkboxes = document.querySelectorAll('.list-group-item input[type="checkbox"]:checked');
         const selectedItems = Array.from(checkboxes).map(checkbox => checkbox.value);
         document.getElementById('instructores').value = JSON.stringify(selectedItems);
+        showToast('Items agregados al formulario!');
     });
 
 });
@@ -103,6 +108,7 @@ document.getElementById('btn-multiple-curso').addEventListener('click', function
         const checkboxes = document.querySelectorAll('.list-group-item input[type="checkbox"]:checked');
         const selectedItems = Array.from(checkboxes).map(checkbox => checkbox.value);
         document.getElementById('cursos').value = JSON.stringify(selectedItems);
+        showToast('Items agregados al formulario!');
     });
 });
 
@@ -116,6 +122,9 @@ function mostrarEstudiantes() {
         <a href="#" class="list-group-item list-group-item-action">
             <b>Actualmente no hay estudiantes inscritos.</b>
         </a>`;
+
+        showToast('Actualmente no hay estudiantes inscritos.!','danger');
+
         return;
     }
 
@@ -135,8 +144,8 @@ function mostrarEstudiantes() {
                 <b>cursos: </b> ${cursosStr}
             </div>
             <div>
-                <button class="btn btn-secondary btn-sm me-2">✏️</button>
-                <button class="btn btn-secondary btn-sm me-2">🗑️</button>
+                <button class="btn btn-light btn-sm me-2">✏️</button>
+                <button class="btn btn-light btn-sm me-2">🗑️</button>
             </div>
         </div>`;
     });
@@ -152,6 +161,9 @@ function mostrarCursos() {
         <a href="#" class="list-group-item list-group-item-action">
             <b>Actualente no hay cursos disponibles:</b>
         </a>`;
+
+        showToast('Actualente no hay cursos disponibles.!','danger');
+
         return;
     }
 
@@ -175,8 +187,8 @@ function mostrarCursos() {
                 <b>Instructores: </b> ${instructorStr}
             </div>
             <div>
-                <button class="btn btn-info text-white btn-sm me-2">✏️</button>
-                <button class="btn btn-info text-white btn-sm me-2">🗑️</button>
+                <button class="btn btn-light btn-sm me-2">✏️</button>
+                <button class="btn btn-light btn-sm me-2">🗑️</button>
             </div>
         </div>`;
     });
@@ -194,9 +206,12 @@ function mostrarCursosAsociarEstudiante() {
         elemento.innerHTML = `
         <li>
             <a href="#" class="list-group-item list-group-item-action">
-                <b>Actualente no hay cursos disponibles:</b>
+                <b>Actualmente no hay cursos disponibles.</b>
             </a>
         </li>`;
+
+        showToast('Actualmente no hay cursos disponibles.!','danger');
+
         return;
     }
 
@@ -219,9 +234,12 @@ function mostrarInstructorAsociarCurso() {
         elemento.innerHTML = `
         <li>
             <a href="#" class="list-group-item list-group-item-action">
-                <b>Actualente no hay cursos disponibles:</b>
+                <b>Actualente no hay instructores en la plataforma.</b>
             </a>
         </li>`;
+
+        showToast('Actualente no hay instructores en la plataforma..!','danger');
+
         return;
     }
 
@@ -246,6 +264,8 @@ function mostrarInstructores() {
             <a href="#" class="list-group-item list-group-item-action">
                 <b>Actualmente no se han creado instructores</b>
             </a>`;
+
+            showToast('Actualente no hay instructores en la plataforma..!','danger');
         return;
     }
 
@@ -259,10 +279,39 @@ function mostrarInstructores() {
                 <b>especialidad:</b> ${instructor.especialidad}
             </div>
             <div>
-                <button class="btn btn-danger btn-sm me-2">✏️</button>
-                <button class="btn btn-danger btn-sm me-2">🗑️</button>
+                <button class="btn btn-light btn-sm me-2">✏️</button>
+                <button class="btn btn-light btn-sm me-2">🗑️</button>
             </div>
         </div>`;
     });
 
+}
+
+
+// Función para mostrar el mensajes al usuario para no usar alertify
+function showToast(message, type = 'success') {
+    const toastContainer = document.getElementById('toast-container');
+    const toastId = 'toast-' + Date.now();
+    
+    const toastHTML = `
+        <div id="${toastId}" class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+
+    toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+    
+    const toastElement = document.getElementById(toastId);
+    const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
+
+    toast.show();
+    
+    toastElement.addEventListener('hidden.bs.toast', () => {
+        toastElement.remove();
+    });
 }
