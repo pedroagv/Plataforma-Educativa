@@ -52,6 +52,15 @@ class Estudiante {
         return JSON.parse(localStorage.getItem('Estudiantes')) || [];
     }    
 
+    static obtenerEstudiantePorid(id) {
+
+        const lista = this.obtenerEstudiantes();
+
+        const estudiante = lista.find(estudiante => estudiante.id === id);
+
+        return estudiante;
+    }
+
     static generateGUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0,
