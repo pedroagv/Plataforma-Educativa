@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// javascript no tiene esta funcion nativa que pereza.
+function IsnullOrEmpty(obj) {
+
+    if (obj == null || obj == '')
+        return false;
+
+    return true;
+}
 
 // control del boton del formulario instructor
 var frminstructor = document.getElementById('frm-instructor');
@@ -26,7 +34,12 @@ frminstructor.addEventListener('submit', function (event) {
     var nombre = form.nombre.value;
     var edad = form.edad.value;
     var especialidad = form.especialidad.value;
-    
+
+    if (!IsnullOrEmpty(nombre) || !IsnullOrEmpty(edad) || !IsnullOrEmpty(especialidad)) {
+        showToast('el formulario Asignación de Instructores esta incompleto!', 'danger');    
+        return;
+    }
+
     const obj = new Instructor(id, nombre, edad, especialidad);
     Instructor.guardarInstructor(obj);
     mostrarInstructores();
@@ -42,12 +55,17 @@ frmcurso.addEventListener('submit', function (event) {
 
     var form = event.target;
     var id = form.id.value;
-    var nombrecurso = form.nombrecurso.value;
+    var titulo = form.titulo.value;
     var duracion = form.duracion.value;
-    var nivel = form.nivel.value;
-    var instructores = JSON.parse(form.instructores.value);
+    var descripcion = form.descripcion.value;
+    var instructores = form.instructores.value;
 
-    const obj = new Curso(id, nombrecurso, duracion, nivel, instructores);
+    if (!IsnullOrEmpty(titulo) || !IsnullOrEmpty(duracion) || !IsnullOrEmpty(descripcion) || !IsnullOrEmpty(instructores)) {
+        showToast('el formulario Gestión de cursos esta incompleto!', 'danger');    
+        return;
+    }
+
+    const obj = new Curso(id, titulo, duracion, descripcion, JSON.parse(instructores));
     Curso.guardarCurso(obj);
     mostrarCursos();
     showToast('Curso agregado con exito!');
@@ -64,6 +82,12 @@ frmestudiante.addEventListener('submit', function (event) {
     var nombre = form.nombre.value;
     var edad = form.edad.value;
     var cursos = form.cursos.value;
+
+    if (!IsnullOrEmpty(nombre) || !IsnullOrEmpty(edad) || !IsnullOrEmpty(cursos)) {
+        showToast('el formulario Inscripción de Estudiantes esta incompleto!', 'danger');    
+        return;
+    }
+
     const obj = new Estudiante(id, nombre, edad, JSON.parse(cursos));
 
     Estudiante.guardarEstudiante(obj);
@@ -134,7 +158,7 @@ function mostrarEstudiantes() {
 
         const nombresCursos = estudiante.cursos.map(curso_id => {
             const curso = Curso.obtenerCursoPorid(curso_id);
-            return curso ? curso.nombrecurso : `id no encontrado: ${curso_id}`;
+            return curso ? curso.titulo : `id no encontrado: ${curso_id}`;
         });
 
         const cursosStr = nombresCursos.join(', ');
@@ -188,9 +212,9 @@ function mostrarCursos() {
         <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
             <div>
                 <b>id: </b>${curso.id}<br/>
-                <b>Curso: </b> ${curso.nombrecurso} <br/>
+                <b>Curso: </b> ${curso.titulo} <br/>
                 <b>Duracion: </b> ${curso.duracion} <br/>
-                <b>Nivel: </b> ${curso.nivel} <br/>
+                <b>Descripcion: </b> ${curso.descripcion} <br/>
                 <b>Instructores: </b> ${instructorStr}
             </div>
             <div>
@@ -231,7 +255,7 @@ function mostrarCursosAsociarEstudiante() {
         elemento.innerHTML += `
         <li class="list-group-item">
             <input type="checkbox" id="item-${curso.id}" value="${curso.id}">
-            <label for="item1"><b>Curso: </b>${curso.nombrecurso}</label>
+            <label for="item1"><b>Curso: </b>${curso.titulo}</label>
         </li>`;
     });
 }
@@ -339,9 +363,10 @@ function crearBtnEliminarInstructor() {
             evento.preventDefault();
 
             let id = boton.getAttribute('data-id');
+            
             Instructor.eliminarInstructor(id);
 
-            showToast('Instructor eliminado con exito!');
+            showToast(`Instructor: ${id} eliminado con exito!`);
 
             mostrarInstructores();
 
@@ -357,7 +382,7 @@ function crearBtnEditarInstructor() {
             evento.preventDefault();
 
             let id = boton.getAttribute('data-id');
-            
+
             const instructor = Instructor.obtenerInstructorPorid(id);
 
             // cargamos de nuevo el formulario con los datos
@@ -383,9 +408,10 @@ function crearBtnEliminarCursos() {
             evento.preventDefault();
 
             let id = boton.getAttribute('data-id');
+            
             Curso.eliminarCurso(id);
 
-            showToast('Curso eliminado con exito!');
+            showToast(`Curso: ${id} eliminado con exito!`);
 
             mostrarCursos();
 
@@ -401,7 +427,7 @@ function crearBtnEditarCurso() {
             evento.preventDefault();
 
             let id = boton.getAttribute('data-id');
-            
+
             const curso = Curso.obtenerCursoPorid(id);
 
             // cargamos de nuevo el formulario con los datos
@@ -411,9 +437,9 @@ function crearBtnEditarCurso() {
 
             // Asigna valores a los campos del formulario
             formulario.querySelector('#id').value = curso.id || '';
-            formulario.querySelector('#nombrecurso').value = curso.nombrecurso || '';
+            formulario.querySelector('#titulo').value = curso.titulo || '';
             formulario.querySelector('#duracion').value = curso.duracion || '';
-            formulario.querySelector('#nivel').value = curso.nivel || '';
+            formulario.querySelector('#descripcion').value = curso.descripcion || '';
             formulario.querySelector('#instructores').value = JSON.stringify(curso.instructores) || '';
 
         });
@@ -430,7 +456,7 @@ function crearBtnEliminarEstudiante() {
             let id = boton.getAttribute('data-id');
             Estudiante.eliminarEstudiante(id);
 
-            showToast('Estudiante eliminado con exito!');
+            showToast(`Estudiante: ${id} eliminado con exito!`);
 
             mostrarEstudiantes();
 
@@ -446,7 +472,7 @@ function crearBtnEditarEstudiante() {
             evento.preventDefault();
 
             let id = boton.getAttribute('data-id');
-            
+
             const estudiante = Estudiante.obtenerEstudiantePorid(id);
 
             // cargamos de nuevo el formulario con los datos
@@ -457,7 +483,7 @@ function crearBtnEditarEstudiante() {
             // Asigna valores a los campos del formulario
             formulario.querySelector('#id').value = estudiante.id || '';
             formulario.querySelector('#nombre').value = estudiante.nombre || '';
-            formulario.querySelector('#edad').value = estudiante.edad || '';            
+            formulario.querySelector('#edad').value = estudiante.edad || '';
             formulario.querySelector('#cursos').value = JSON.stringify(estudiante.cursos) || '';
 
         });

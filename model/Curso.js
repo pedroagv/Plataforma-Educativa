@@ -1,10 +1,10 @@
 class Curso {
 
-    constructor(id, nombrecurso, duracion, nivel, instructores) {
+    constructor(id, titulo, duracion, descripcion, instructores) {
         this.id = id;
-        this.nombrecurso = nombrecurso;
+        this.titulo = titulo;
         this.duracion = duracion;
-        this.nivel = nivel;
+        this.descripcion = descripcion;
         this.instructores = instructores;
     }
 
@@ -41,7 +41,7 @@ class Curso {
         return JSON.parse(localStorage.getItem('Cursos')) || [];
     }
 
-    
+
 
     static generateGUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -61,14 +61,14 @@ class Curso {
     }
 
     static eliminarCurso(id) {
-         
+
         let listaCursos = JSON.parse(localStorage.getItem('Cursos')) || [];
 
         // Filtrar la lista para remover el estudiante con el ID dado se crea una nueva lista sin este y se guarda.
         listaCursos = listaCursos.filter(curso => curso.id !== id);
-         
+
         localStorage.setItem('Cursos', JSON.stringify(listaCursos));
-   }
+    }
 }
 
 export default Curso;

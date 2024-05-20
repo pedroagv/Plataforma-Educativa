@@ -48,19 +48,19 @@
                     <input type="hidden" id="id" name="id" />
 
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
+                        <label for="nombre" class="form-label">Nombre completo</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" />
                     </div>
                     <div class="mb-3">
                         <label for="edad" class="form-label">Edad</label>
-                        <input type="text" class="form-control" id="edad" name="edad" />
+                        <input type="number" class="form-control" id="edad" name="edad" />
                     </div>
                     <div class="mb-3">
                         <label for="especialidad" class="form-label">Especialidad</label>
                         <input type="text" class="form-control" id="especialidad" name="especialidad" />
                     </div>
 
-                    <button type="submit" class="btn btn-danger text-white w-100">Guardar</button>
+                    <button type="submit" class="btn btn-success text-white w-100">Guardar</button>
                 </form>
             </div>
 
@@ -80,18 +80,26 @@
                     <input type="hidden" id="id" name="id" />
 
                     <div class="mb-3">
-                        <label for="nombrecurso" class="form-label">Nombre Curso</label>
-                        <input type="text" class="form-control" id="nombrecurso" name="nombrecurso" />
+                        <label for="titulo" class="form-label">Título del curso</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" />
                     </div>
 
                     <div class="mb-3">
                         <label for="duracion" class="form-label">Duracion</label>
-                        <input type="text" class="form-control" id="duracion" name="duracion" />
+                        <!-- <input type="text" class="form-control"  /> -->
+                        <select id="duracion" name="duracion" class="form-control">
+                            <option value="Ninguno">Seleccione...</option>
+                            <option value="1 año">1 año</option>
+                            <option value="2 año">2 año</option>
+                            <option value="3 año">3 año</option>
+                            <option value="4 año">4 año</option>
+                            <option value="5 año">5 año</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">
-                        <label for="nivel" class="form-label">Nivel</label>
-                        <input type="text" class="form-control" id="nivel" name="nivel" />
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" />
                     </div>
 
                     <div class="mb-3">
@@ -102,7 +110,7 @@
                         <input type="hidden" class="form-control" id="instructores" name="instructores" />
                     </div>
 
-                    <button type="submit" class="btn btn-info w-100 text-white">Guardar</button>
+                    <button type="submit" class="btn btn-success w-100 text-white">Guardar</button>
                 </form>
             </div>
 
@@ -141,7 +149,7 @@
                         <input type="hidden" class="form-control" id="cursos" name="cursos" />
                     </div>
 
-                    <button type="submit" class="btn btn-secondary w-100 text-white">Guardar</button>
+                    <button type="submit" class="btn btn-success w-100 text-white">Guardar</button>
                 </form>
             </div>
 
